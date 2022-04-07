@@ -3,6 +3,7 @@ import Page from "../components/Page";
 import ProductList from "../sections/products/ProductList";
 import { collection, getDocs } from "firebase/firestore";
 import { firestore } from "../utils/firebase";
+import { UserContext } from "../contexts/UserProvider";
 import PropTypes from "prop-types";
 import { Container } from "@mui/material";
 
@@ -16,6 +17,8 @@ export async function getStaticProps() {
 }
 
 export default function Home({ products }) {
+  const { user, authRecord } = React.useContext(UserContext);
+  console.log(user, authRecord);
   return (
     <Page title={"Home"} sx={{ p: { xs: 4, sm: 6 } }}>
       <Container maxWidth="lg">
