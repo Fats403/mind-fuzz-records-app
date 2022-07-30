@@ -4,7 +4,6 @@ import Head from "next/head";
 import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider } from "@emotion/react";
 import createEmotionCache from "../utils/createEmotionCache";
-import NavBar from "../components/NavBar";
 import Providers from "../contexts/Providers";
 
 // Client-side cache, shared for the whole session of the user in the browser.
@@ -20,9 +19,13 @@ export default function MyApp(props) {
       </Head>
       <Providers>
         <CssBaseline />
-        <NavBar />
         <Component {...pageProps} />
       </Providers>
+      <style jsx global>{`
+        body {
+          background: whitesmoke;
+        }
+      `}</style>
     </CacheProvider>
   );
 }

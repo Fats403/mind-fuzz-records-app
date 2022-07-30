@@ -16,6 +16,7 @@
     "@emotion/styled": "latest",
     "@mui/icons-material": "latest",
     "@mui/material": "latest",
+    "@mui/lab": "latest",
     "firebase": "9.6.10",
     "next": "12.1.4",
     "numeral": "2.0.6",

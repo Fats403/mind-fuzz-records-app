@@ -6,10 +6,9 @@ import Copyright from "../components/Copyright";
 
 const RootStyle = styled(Page)(({ theme }) => ({
   display: "flex",
-  minHeight: "100%",
+  minHeight: "100vh",
   alignItems: "center",
-  paddingTop: theme.spacing(15),
-  paddingBottom: theme.spacing(10),
+  justifyContent: "center",
 }));
 
 export default function NotFound404() {

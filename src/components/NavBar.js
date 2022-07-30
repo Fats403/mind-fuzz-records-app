@@ -6,6 +6,18 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
+import { UserContext } from "../contexts/UserProvider";
+import {
+  Avatar,
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+  Tooltip,
+} from "@mui/material";
+import { signOut } from "firebase/auth";
+import { auth } from "../utils/firebase";
+import { useRouter } from "next/router";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -50,6 +62,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function NavBar() {
+  const router = useRouter();
+  const { user } = React.useContext(UserContext);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -62,6 +86,7 @@ export default function NavBar() {
           >
             Mind Fuzz Records
           </Typography>
+
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -71,6 +96,41 @@ export default function NavBar() {
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
+          <Box sx={{ ml: 2 }}>
+            {!user ? (
+              <Button color="inherit" onClick={() => router.push("/login")}>
+                Login
+              </Button>
+            ) : (
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar alt={user.displayName} src={user.photoURL} />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  <MenuItem onClick={() => signOut(auth)}>
+                    <Typography textAlign="center">Logout</Typography>
+                  </MenuItem>
+                </Menu>
+              </Box>
+            )}
+          </Box>
         </Toolbar>
       </AppBar>
     </Box>

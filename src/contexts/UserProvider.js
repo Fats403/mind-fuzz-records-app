@@ -7,8 +7,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 const UserContext = createContext({ user: null, authRecord: null });
 
 function UserProvider({ children }) {
-  const [authRecord] = useAuthState(auth);
-  const [user, setUser] = useState(null);
+  const [user] = useAuthState(auth);
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     let unsubscribe;
@@ -16,17 +16,17 @@ function UserProvider({ children }) {
     if (user) {
       const ref = doc(firestore, "users", user.uid);
       unsubscribe = onSnapshot(ref, (doc) => {
-        setUser(doc.data());
+        setUserData(doc.data());
       });
     } else {
-      setUser(null);
+      setUserData(null);
     }
 
     return unsubscribe;
   }, [user]);
 
   return (
-    <UserContext.Provider value={{ authRecord, user }}>
+    <UserContext.Provider value={{ userData, user }}>
       {children}
     </UserContext.Provider>
   );
