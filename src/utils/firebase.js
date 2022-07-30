@@ -4,13 +4,13 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDVidK1myyXkdlD818IzRR4kzriWhJYiAI",
-  authDomain: "mind-fuzz-records.firebaseapp.com",
-  projectId: "mind-fuzz-records",
-  storageBucket: "mind-fuzz-records.appspot.com",
-  messagingSenderId: "439649163770",
-  appId: "1:439649163770:web:ebd1e7b104eaabad3f6c43",
-  measurementId: "G-9XLRT286R8",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: `${process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID}.firebaseapp.com`,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: `${process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID}.appspot.com`,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
 function createFirebaseApp(config) {

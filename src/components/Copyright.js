@@ -6,7 +6,11 @@ export default function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {"Copyright © "}
-      <MuiLink color="inherit" href="https://www.mindfuzzrecords.com">
+      <MuiLink
+        color="inherit"
+        sx={{ cursor: "pointer" }}
+        onClick={() => window.open("https://www.mindfuzzrecords.com", "_blank")}
+      >
         Mind Fuzz Records
       </MuiLink>{" "}
       {new Date().getFullYear()}.
