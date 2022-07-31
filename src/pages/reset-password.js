@@ -7,12 +7,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import Page from "../components/Page";
-import Link from "../components/Link";
-import { LoginForm } from "../sections/authentication/login";
-import AuthSocial from "../sections/authentication/AuthSocial";
-import { useRouter } from "next/router";
-import { useContext, useEffect } from "react";
-import { UserContext } from "../contexts/UserProvider";
+import { ResetPasswordForm } from "../sections/authentication/reset-password";
 
 const RootStyle = styled(Page)(({ theme }) => ({
   [theme.breakpoints.up("md")]: {
@@ -30,18 +25,11 @@ const ContentStyle = styled("div")(({ theme }) => ({
   padding: theme.spacing(12, 0),
 }));
 
-export default function Login() {
+export default function ResetPassword() {
   const theme = useTheme();
-  const router = useRouter();
-  const { user } = useContext(UserContext);
   const xsBreakpoint = useMediaQuery(theme.breakpoints.up("sm"));
-
-  useEffect(() => {
-    user && router.push("/");
-  }, [router]);
-
   return (
-    <RootStyle title="Login">
+    <RootStyle title="Reset Password">
       <Container maxWidth="sm">
         <ContentStyle>
           <Paper
@@ -50,26 +38,11 @@ export default function Login() {
           >
             <Stack sx={{ mb: 4 }}>
               <Typography variant="h4" gutterBottom sx={{ fontWeight: 600 }}>
-                Mind Fuzz Records
+                Reset Password
               </Typography>
             </Stack>
 
-            <AuthSocial />
-
-            <LoginForm />
-
-            <Typography
-              variant="body2"
-              align="center"
-              sx={{
-                mt: 3,
-              }}
-            >
-              Don't have an account?{" "}
-              <Link variant="subtitle2" href="/register" underline="hover">
-                Sign up
-              </Link>
-            </Typography>
+            <ResetPasswordForm />
           </Paper>
         </ContentStyle>
       </Container>
