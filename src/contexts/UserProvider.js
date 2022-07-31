@@ -7,7 +7,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 const UserContext = createContext({ user: null, authRecord: null });
 
 function UserProvider({ children }) {
-  const [user] = useAuthState(auth);
+  const [user, isAuthLoading] = useAuthState(auth);
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ function UserProvider({ children }) {
   }, [user]);
 
   return (
-    <UserContext.Provider value={{ userData, user }}>
+    <UserContext.Provider value={{ userData, user, isAuthLoading }}>
       {children}
     </UserContext.Provider>
   );

@@ -3,11 +3,14 @@ import PropTypes from "prop-types";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../styles/theme";
 import { UserProvider } from "./UserProvider";
+import { SnackBarProvider } from "./SnackBarProvider";
 
 function Providers({ children }) {
   return (
     <ThemeProvider theme={theme}>
-      <UserProvider>{children}</UserProvider>
+      <UserProvider>
+        <SnackBarProvider>{children}</SnackBarProvider>
+      </UserProvider>
     </ThemeProvider>
   );
 }

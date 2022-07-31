@@ -3,14 +3,22 @@ import GoogleIcon from "@mui/icons-material/Google";
 import { auth, googleAuthProvider } from "../../utils/firebase";
 import { signInWithPopup } from "firebase/auth";
 import { useRouter } from "next/router";
+import { SnackBarContext } from "../../contexts/SnackBarProvider";
+import { useContext } from "react";
 
 export default function AuthSocial() {
   const router = useRouter();
+  const { showMessage } = useContext(SnackBarContext);
 
   const signInWithGoogle = () => {
     signInWithPopup(auth, googleAuthProvider)
       .then(() => router.push("/"))
-      .catch((e) => console.log("something went wrong.", e));
+      .catch(() =>
+        showMessage({
+          message: "Something went wrong, try again later.",
+          severity: "error",
+        })
+      );
   };
 
   return (
