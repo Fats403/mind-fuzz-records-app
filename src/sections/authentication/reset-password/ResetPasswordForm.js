@@ -7,7 +7,7 @@ import { auth } from "../../../utils/firebase";
 import router from "next/router";
 import { SnackBarContext } from "../../../contexts/SnackBarProvider";
 import { sendPasswordResetEmail } from "firebase/auth";
-import Link from "next/link";
+import Link from "../../../components/Link";
 
 export default function ResetPasswordForm() {
   const [isLoading, setIsLoading] = useState(false);

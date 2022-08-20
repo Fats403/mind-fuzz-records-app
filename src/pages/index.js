@@ -19,7 +19,7 @@ export async function getStaticProps() {
 export default function Home({ products }) {
   return (
     <HomeLayout>
-      <Page title={"Home"} sx={{ p: { xs: 4, sm: 6 } }}>
+      <Page title="Home" sx={{ p: { xs: 4, sm: 6 } }}>
         <Container maxWidth="lg">
           <ProductList products={products} />
         </Container>

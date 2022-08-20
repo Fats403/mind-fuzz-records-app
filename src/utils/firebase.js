@@ -13,7 +13,7 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-function createFirebaseApp(config) {
+function getFirebaseApp(config) {
   try {
     return getApp();
   } catch {
@@ -21,7 +21,7 @@ function createFirebaseApp(config) {
   }
 }
 
-const firebaseApp = createFirebaseApp(firebaseConfig);
+const firebaseApp = getFirebaseApp(firebaseConfig);
 
 // Auth exports
 export const auth = getAuth(firebaseApp);
