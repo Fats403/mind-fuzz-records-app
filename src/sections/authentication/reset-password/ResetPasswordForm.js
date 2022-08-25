@@ -3,11 +3,11 @@ import { Stack, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { useForm } from "react-hook-form";
 import ControlledMuiTextfield from "../../../components/inputs/ControlledMuiTextfield";
-import { auth } from "../../../utils/firebase";
 import router from "next/router";
 import { SnackBarContext } from "../../../contexts/SnackBarProvider";
 import { sendPasswordResetEmail } from "firebase/auth";
 import Link from "../../../components/Link";
+import { auth } from "../../../services/firebase/client";
 
 export default function ResetPasswordForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -21,6 +21,7 @@ export default function ResetPasswordForm() {
     control,
     clearErrors,
   } = form;
+
   const { email } = watch();
 
   const resetPassword = async () => {
@@ -34,10 +35,10 @@ export default function ResetPasswordForm() {
         });
         router.push("/login");
       })
-      .catch(() => {
+      .catch((e) => {
         setIsLoading(false);
         showMessage({
-          message: "That user does not exist",
+          message: e.message,
           severity: "error",
         });
       });

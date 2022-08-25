@@ -16,18 +16,21 @@ export default function AuthLayout({ children }) {
   const theme = useTheme();
   const xsBreakpoint = useMediaQuery(theme.breakpoints.up("sm"));
   return (
-    <>
-      <Container maxWidth="sm">
-        <ContentStyle>
-          <Paper
-            sx={{ p: { xs: 2, sm: 6 }, borderRadius: 8 }}
-            elevation={xsBreakpoint ? 4 : 0}
-          >
-            {children}
-          </Paper>
-        </ContentStyle>
-      </Container>
-    </>
+    <Container maxWidth="sm">
+      <ContentStyle>
+        <Paper
+          sx={{
+            py: 6,
+            px: { xs: 2, sm: 6 },
+            borderRadius: 8,
+            backgroundColor: xsBreakpoint ? "#fff" : "#00000000",
+          }}
+          elevation={xsBreakpoint ? 4 : 0}
+        >
+          {children}
+        </Paper>
+      </ContentStyle>
+    </Container>
   );
 }
 

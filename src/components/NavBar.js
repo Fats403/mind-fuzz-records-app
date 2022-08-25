@@ -16,8 +16,9 @@ import {
   Tooltip,
 } from "@mui/material";
 import { signOut } from "firebase/auth";
-import { auth } from "../utils/firebase";
 import { useRouter } from "next/router";
+import roles from "../utils/constants/roles";
+import { auth } from "../services/firebase/client";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -63,7 +64,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function NavBar() {
   const router = useRouter();
-  const { user } = React.useContext(UserContext);
+  const { user, customClaims } = React.useContext(UserContext);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenUserMenu = (event) => {
@@ -78,16 +79,11 @@ export default function NavBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-          >
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
             Mind Fuzz Records
           </Typography>
 
-          <Search>
+          {/*<Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -95,7 +91,7 @@ export default function NavBar() {
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
             />
-          </Search>
+          </Search>*/}
           <Box sx={{ ml: 2 }}>
             {!user ? (
               <Button color="inherit" onClick={() => router.push("/login")}>
@@ -105,7 +101,14 @@ export default function NavBar() {
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt={user.displayName} src={user.photoURL} />
+                    <Avatar
+                      alt={user.displayName}
+                      src={user.photoURL}
+                      sx={{
+                        width: { xs: 32, sm: 38 },
+                        height: { xs: 32, sm: 38 },
+                      }}
+                    />
                   </IconButton>
                 </Tooltip>
                 <Menu
@@ -127,6 +130,13 @@ export default function NavBar() {
                   <MenuItem onClick={() => signOut(auth)}>
                     <Typography textAlign="center">Logout</Typography>
                   </MenuItem>
+                  {customClaims?.role === roles.ADMIN && (
+                    <MenuItem onClick={() => router.push("/dashboard")}>
+                      <Typography textAlign="center">
+                        Admin Dashboard
+                      </Typography>
+                    </MenuItem>
+                  )}
                 </Menu>
               </Box>
             )}

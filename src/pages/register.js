@@ -1,10 +1,20 @@
+import React, { useContext, useEffect } from "react";
 import { Typography } from "@mui/material";
 import Page from "../components/Page";
 import { RegisterForm } from "../sections/authentication/register";
 import Link from "next/link";
 import AuthLayout from "../layouts/AuthLayout";
+import { UserContext } from "../contexts/UserProvider";
+import { useRouter } from "next/router";
 
 export default function Register() {
+  const router = useRouter();
+  const { user } = useContext(UserContext);
+
+  useEffect(() => {
+    user && router.push("/");
+  }, [user, router]);
+
   return (
     <AuthLayout>
       <Page title="Register">

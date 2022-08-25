@@ -17,9 +17,8 @@ import {
   setPersistence,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { auth } from "../../../utils/firebase";
-import router from "next/router";
 import { SnackBarContext } from "../../../contexts/SnackBarProvider";
+import { auth } from "../../../services/firebase/client";
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -39,18 +38,13 @@ export default function LoginForm() {
 
   const login = () => {
     setIsLoading(true);
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        setIsLoading(false);
-        router.push("/");
-      })
-      .catch(() => {
-        setIsLoading(false);
-        showMessage({
-          message: "Email or password is incorrect.",
-          severity: "error",
-        });
+    signInWithEmailAndPassword(auth, email, password).catch(() => {
+      setIsLoading(false);
+      showMessage({
+        message: "Email or password is incorrect.",
+        severity: "error",
       });
+    });
   };
 
   return (

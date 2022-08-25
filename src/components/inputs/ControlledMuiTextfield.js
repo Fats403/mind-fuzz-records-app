@@ -40,7 +40,11 @@ export default function ControlledMuiTextfield({
             select={select}
             onFocus={onFocus}
             value={value}
-            onChange={(e) => onChange(e.target.value)}
+            onChange={(e) =>
+              onChange(
+                type === "number" ? Number(e.target.value) : e.target.value
+              )
+            }
             variant="outlined"
             disabled={disabled}
             label={label}

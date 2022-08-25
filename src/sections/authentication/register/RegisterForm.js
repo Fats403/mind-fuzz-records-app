@@ -4,16 +4,14 @@ import { LoadingButton } from "@mui/lab";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import ControlledMuiTextfield from "../../../components/inputs/ControlledMuiTextfield";
-import { auth } from "../../../utils/firebase";
-import { useRouter } from "next/router";
 import { SnackBarContext } from "../../../contexts/SnackBarProvider";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../../services/firebase/client";
 
 export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showVerifyPassword, setShowVerifyPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
   const { showMessage } = useContext(SnackBarContext);
 
   const form = useForm();
@@ -28,22 +26,13 @@ export default function RegisterForm() {
 
   const register = async () => {
     setIsLoading(true);
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        setIsLoading(false);
-        showMessage({
-          message: "Welcome to Mind Fuzz!",
-          severity: "success",
-        });
-        router.push("/");
-      })
-      .catch((e) => {
-        setIsLoading(false);
-        showMessage({
-          message: e.message,
-          severity: "error",
-        });
+    createUserWithEmailAndPassword(auth, email, password).catch((e) => {
+      setIsLoading(false);
+      showMessage({
+        message: e.message,
+        severity: "error",
       });
+    });
   };
 
   return (

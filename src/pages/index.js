@@ -2,10 +2,10 @@ import * as React from "react";
 import Page from "../components/Page";
 import ProductList from "../sections/products/ProductList";
 import { collection, getDocs } from "firebase/firestore";
-import { firestore } from "../utils/firebase";
 import PropTypes from "prop-types";
 import { Container } from "@mui/material";
 import HomeLayout from "../layouts/HomeLayout";
+import { firestore } from "../services/firebase/client";
 
 export async function getStaticProps() {
   const snapshot = await getDocs(collection(firestore, "products"));
