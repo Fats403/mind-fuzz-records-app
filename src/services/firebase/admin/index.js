@@ -76,6 +76,7 @@ const deleteProductFirebase = async (id) => {
   const productRef = firestore.collection("products").doc(id);
 
   // TODO: delete storage assets associated to product
+  // TODO: make sure to revamp how images get uploaded
 
   try {
     await productRef.delete();
