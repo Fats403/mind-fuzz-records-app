@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Page from "../components/Page";
 import ProductList from "../sections/products/ProductList";
 import { collection, getDocs } from "firebase/firestore";
@@ -7,6 +7,12 @@ import HomeLayout from "../layouts/HomeLayout";
 import { firestore } from "../services/firebase/client";
 import useSWR, { SWRConfig } from "swr";
 import { fetcher } from "../services/client";
+import { SearchBar } from "../sections/products";
+import useGlobalFilter from "../hooks/search/useGlobalFilter";
+
+const options = {
+  keys: ["title", "description"],
+};
 
 export async function getStaticProps() {
   const snapshot = await getDocs(collection(firestore, "products"));
@@ -21,16 +27,22 @@ export async function getStaticProps() {
 }
 
 function Home() {
-  const { data } = useSWR("/api/products", fetcher, {
+  const {
+    data: { products },
+  } = useSWR("/api/products", fetcher, {
     refreshInterval: 60000 * 5,
     revalidateOnFocus: false,
   });
 
+  const [search, setSearch] = useState("");
+  const filteredProducts = useGlobalFilter(products, options, search);
+
   return (
     <HomeLayout>
-      <Page title="Home" sx={{ p: { xs: 4, sm: 6 } }}>
+      <Page title="Home" sx={{ py: 3, px: { xs: 1, sm: 2, md: 4 } }}>
         <Container maxWidth="lg">
-          <ProductList products={data.products} />
+          <SearchBar setSearch={setSearch} />
+          <ProductList products={filteredProducts} />
         </Container>
       </Page>
     </HomeLayout>

@@ -30,7 +30,7 @@ export default function ProductCard({ product }) {
 
   return (
     <Card
-      elevation={2}
+      elevation={0}
       sx={{
         border: (theme) => `1px solid ${theme.palette.grey[300]}`,
         borderRadius: 2,
@@ -76,6 +76,7 @@ export default function ProductCard({ product }) {
           <Box>
             <Tooltip title="Add to cart">
               <IconButton
+                disableTouchRipple
                 sx={{
                   border: (theme) => `1px solid ${theme.palette.grey[400]}`,
                   borderRadius: 2,
@@ -86,6 +87,7 @@ export default function ProductCard({ product }) {
             </Tooltip>
             <Tooltip title="Favorite">
               <IconButton
+                disableTouchRipple
                 sx={{
                   border: (theme) => `1px solid ${theme.palette.grey[400]}`,
                   borderRadius: 2,

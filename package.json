@@ -20,6 +20,7 @@
     "axios": "^0.27.2",
     "firebase": "9.6.10",
     "firebase-admin": "11.0.1",
+    "fuse.js": "^6.6.2",
     "next": "12.1.4",
     "numeral": "2.0.6",
     "prop-types": "15.8.1",
