@@ -30,8 +30,11 @@ export default function ProductCard({ product }) {
 
   return (
     <Card
-      elevation={0}
-      sx={{ border: (theme) => `1px solid ${theme.palette.grey[400]}` }}
+      elevation={2}
+      sx={{
+        border: (theme) => `1px solid ${theme.palette.grey[300]}`,
+        borderRadius: 2,
+      }}
     >
       <Box sx={{ pt: "100%", position: "relative" }}>
         {status && (
@@ -52,7 +55,13 @@ export default function ProductCard({ product }) {
         <ProductImgStyle alt={title} src={image} layout="fill" />
       </Box>
 
-      <Stack spacing={2} sx={{ p: { xs: 3, sm: 2 } }}>
+      <Stack
+        spacing={2}
+        sx={{
+          p: { xs: 3, sm: 2 },
+          borderTop: (theme) => `1px solid ${theme.palette.grey[300]}`,
+        }}
+      >
         <Box>
           <Link>
             <Typography variant="subtitle2" noWrap>

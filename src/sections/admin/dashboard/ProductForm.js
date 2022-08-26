@@ -15,7 +15,6 @@ export default function ProductForm({ form, isLoading }) {
   } = form;
 
   const formValues = watch();
-  console.log(formValues.priceSale);
 
   const {
     isLoading: isLoadingImage,
