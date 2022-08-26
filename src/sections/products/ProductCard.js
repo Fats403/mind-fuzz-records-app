@@ -40,7 +40,7 @@ export default function ProductCard({ product }) {
         {status && (
           <Label
             variant="filled"
-            color={(status === "sale" && "error") || "info"}
+            color={(status === "sale" && "secondary") || "primary"}
             sx={{
               zIndex: 9,
               top: 16,
