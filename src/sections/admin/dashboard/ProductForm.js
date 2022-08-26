@@ -3,8 +3,8 @@ import ControlledMuiTextfield from "../../../components/inputs/ControlledMuiText
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { Controller } from "react-hook-form";
 import useImageUpload from "../../../hooks/ui/useImageUpload";
-import { useEffect } from "react";
 import ImageUpload from "../../../components/inputs/ImageUpload";
+import useSyncImageUploadToForm from "../../../hooks/ui/useSyncImageUploadToForm";
 
 export default function ProductForm({ form, isLoading }) {
   const {
@@ -12,10 +12,10 @@ export default function ProductForm({ form, isLoading }) {
     formState: { errors },
     clearErrors,
     watch,
-    setValue,
   } = form;
 
   const formValues = watch();
+  console.log(formValues.priceSale);
 
   const {
     isLoading: isLoadingImage,
@@ -23,11 +23,7 @@ export default function ProductForm({ form, isLoading }) {
     imagePreview,
   } = useImageUpload("products");
 
-  // NOTE: sync the uploaded image with the form
-  useEffect(() => setValue("image", imagePreview), [setValue, imagePreview]);
-
-  // NOTE: sync current product image to image preview
-  useEffect(() => formValues.image && setValue("image", formValues.image), []);
+  useSyncImageUploadToForm({ form, imagePreview });
 
   return (
     <Stack spacing={2} sx={{ mt: 1 }}>
@@ -138,9 +134,13 @@ export default function ProductForm({ form, isLoading }) {
             fullWidth={true}
             type={"number"}
             rules={{
-              validate: (val) =>
-                (formValues.price && val >= formValues.price) ||
-                "Sale price cannot be lower then true price.",
+              ...(formValues.priceSale
+                ? {
+                    validate: (val) =>
+                      (formValues.price && val >= formValues.price) ||
+                      "Sale price cannot be lower then true price.",
+                  }
+                : {}),
             }}
             error={errors.priceSale}
             control={control}

@@ -1,11 +1,11 @@
-import { Box, CircularProgress } from "@mui/material";
+import { Box } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { UserContext } from "../../contexts/UserProvider";
 import router from "next/router";
 import PageLoader from "../../components/PageLoader";
 
 export default function withAuthClient(Component, role) {
-  return function () {
+  return () => {
     const { user, customClaims, isAuthLoading } = useContext(UserContext);
 
     useEffect(() => {

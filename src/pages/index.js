@@ -2,32 +2,45 @@ import * as React from "react";
 import Page from "../components/Page";
 import ProductList from "../sections/products/ProductList";
 import { collection, getDocs } from "firebase/firestore";
-import PropTypes from "prop-types";
 import { Container } from "@mui/material";
 import HomeLayout from "../layouts/HomeLayout";
 import { firestore } from "../services/firebase/client";
+import useSWR, { SWRConfig } from "swr";
+import { fetcher } from "../services/client";
 
 export async function getStaticProps() {
   const snapshot = await getDocs(collection(firestore, "products"));
   const products = snapshot.docs.map((doc) => doc.data());
-
   return {
-    props: { products },
+    props: {
+      fallback: {
+        "/api/products": { products },
+      },
+    },
   };
 }
 
-export default function Home({ products }) {
+function Home() {
+  const { data } = useSWR("/api/products", fetcher, {
+    refreshInterval: 60000 * 5,
+    revalidateOnFocus: false,
+  });
+
   return (
     <HomeLayout>
       <Page title="Home" sx={{ p: { xs: 4, sm: 6 } }}>
         <Container maxWidth="lg">
-          <ProductList products={products} />
+          <ProductList products={data.products} />
         </Container>
       </Page>
     </HomeLayout>
   );
 }
 
-Home.propTypes = {
-  products: PropTypes.array.isRequired,
-};
+export default function Index({ fallback }) {
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Home />
+    </SWRConfig>
+  );
+}
